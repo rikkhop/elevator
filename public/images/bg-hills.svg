@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="6.159 241.443 493.708 486.341" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="clip-0">
+      <rect x="-79.283" y="116.08" width="495.347" height="489.827" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0); fill-opacity: 0; stroke-width: 0px;"/>
+    </clipPath>
+  </defs>
+  <g transform="matrix(1, 0, 0, 1, 84.22718, 124.466362)" style="clip-path: url(#clip-0);">
+    <ellipse style="stroke: rgb(0, 0, 0); fill: rgb(239, 242, 230); stroke-width: 0px;" cx="239.231" cy="154.036" rx="116.102" ry="32.561"/>
+    <ellipse style="stroke: rgb(203, 217, 132); fill: rgb(212, 235, 157); stroke-width: 0px;" cx="63.661" cy="208.32" rx="194.481" ry="88.875"/>
+    <ellipse style="stroke: rgb(0, 0, 0); fill: rgb(202, 220, 114); stroke-width: 0px;" cx="368.292" cy="232.201" rx="281.061" ry="105.51"/>
+    <ellipse style="stroke: rgb(0, 0, 0); fill: rgb(202, 220, 114); stroke-width: 0px;" cx="-2.334" cy="210.364" rx="161.34" ry="91.893"/>
+    <rect x="-89.744" y="214.941" width="509.202" height="390.527" style="stroke: rgb(0, 0, 0); fill: rgb(202, 220, 114); stroke-width: 0px;"/>
+  </g>
+</svg>
