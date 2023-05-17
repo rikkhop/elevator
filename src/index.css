@@ -4,11 +4,14 @@
 
 body {
   margin: 0;
-  font-size: 22px;
+  font-size: 16px;
   font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #0e2b65;
+
+  @apply text-[14px];
+  @apply md:text-[16px];
 }
 
 code {
@@ -45,7 +48,8 @@ section {
 }
 
 h1 {
-  @apply text-[6rem];
+  @apply text-[2.5rem];
+  @apply md:text-[4rem];
 }
 
 p {

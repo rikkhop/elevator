@@ -1,14 +1,9 @@
 import { Chart } from 'chart.js/auto'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import Button from './Button.js'
 
 export default function MapChart({ points, isActive, className, toggle }) {
     const chartRef = useRef(null)
-    const [active, setActive] = useState(isActive)
-
-    function closeChart() {
-        setActive(false)
-    }
 
     useEffect(()=>{
         
@@ -50,8 +45,8 @@ export default function MapChart({ points, isActive, className, toggle }) {
     }, [points])
 
     return (
-        <div className={className}>
-            <div className='bg-white w-2/3 p-8 rounded-lg relative'>
+        <div className={`p-8 ${className}`}>
+            <div className='bg-white w-full md:w-2/3 p-8 rounded-lg relative'>
                 <Button className='absolute top-8 right-8' action={ toggle } text="close" />
                 <canvas ref={ chartRef } width="100%" className="chart"></canvas>
             </div>

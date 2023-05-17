@@ -130,7 +130,7 @@ function Map() {
         }
     }
 
-    function handleMarkerClick(index) {
+    function handleMarkerClick(index) { 
         // remove all markers after and including the one clicked from state.markers
         markers.length = index
 
@@ -188,7 +188,7 @@ function Map() {
         <section className="map h-auto bg-[#cadc72]">
                 <div className='container'>
                     <div className='row justify-center'>
-                        <div className='w-5/12'>
+                        <div className='w-full md:w-5/12'>
                             <StandaloneSearchBox ref={search} onLoad={searchLoad} onPlacesChanged={onPlacesChanged} >
                                 <form>
                                     <label className="absolute left-[-999999px]" htmlFor="search">Choose destination</label>
@@ -201,11 +201,11 @@ function Map() {
                                     />
                                 </form>
                             </StandaloneSearchBox>
-                            <div className='flex gap-4 mb-4'>
-                                <Button className={`w-1/2 ${!markers.length ? 'bg-gray-300' : ''}` } action={ generateElevation } text="Get elevation"></Button>
-                                <Button className={`w-1/2 ${!markers.length ? 'bg-gray-300' : ''}` } action={ clearRoute } text="Clear route"></Button>
+                            <div className='flex flex-col md:flex-row gap-4 mb-4'>
+                                <Button className={`w-full md:w-1/2 ${!markers.length ? 'bg-gray-300' : ''}` } action={ generateElevation } text="Get elevation"></Button>
+                                <Button className={`w-full md:w-1/2 ${!markers.length ? 'bg-gray-300' : ''}` } action={ clearRoute } text="Clear route"></Button>
                             </div>
-                            <p className='p-4 text-[2rem]'>Total distance: <span className='font-bold'>{ (distance / 1000).toFixed(2) + 'km'}</span></p>
+                            <p className='p-4 text-[1.4rem]'>Total distance: <span className='font-bold'>{ (distance / 1000).toFixed(2) + 'km'}</span></p>
                         </div>
                     </div>
                     <div className='row'>
