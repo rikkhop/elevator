@@ -4,8 +4,7 @@ export default function Hero() {
             <div className="container">
                 <div className="row justify-center">
                     <div className="w-2/3">
-                        <p>But it looked easier on the map!</p>
-                        <p>It isn't easy to see those step slopes when you're planning your hikes on a map. Don't let that challenging terrain catch you out again. Plot out your walking route on the map below to see the changes in elevation that could stop you in your tracks.</p>
+                        <p className="text-[1.6rem]">It can be difficult to see the steep slopes when you're planning your hikes on a map. Don't let that challenging terrain catch you out again. Plot out your walking route on the map below to see the changes in elevation that could stop you in your tracks.</p>
                     </div>
                 </div>
             </div>
