@@ -5,7 +5,7 @@ import Map from './components/Map.js'
 
 function App() {
   return (
-    <div className="App">
+    <div className="App bg-[#f0fffe]">
       <Header />
       <Hero />
       <Map />

@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  font-size: 18px;
+  font-size: 22px;
   font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -32,6 +32,7 @@ section {
 
 .row {
   @apply flex;
+  @apply px-8;
 }
 
 .btn {
@@ -44,7 +45,7 @@ section {
 }
 
 h1 {
-  @apply text-5xl;
+  @apply text-[6rem];
 }
 
 p {
@@ -52,5 +53,5 @@ p {
 }
 
 .row {
-  @apply px-4;
+  
 }
