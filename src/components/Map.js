@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState, useRef } from 'react';
-import { GoogleMap, useJsApiLoader, StandaloneSearchBox } from '@react-google-maps/api';
+import { GoogleMap, Marker, useJsApiLoader, StandaloneSearchBox } from '@react-google-maps/api';
 import MapChart from './Chart'
 import Button from './Button'
 
@@ -97,55 +97,47 @@ function Map() {
 
     function handleMapClick(e) {
 
-        let iconPath = markers.length ? 'images/marker.png' : 'images/marker_first.png'
+        if(e) {
+            const marker = e.latLng
 
-        const marker = new window.google.maps.Marker({
-            position: e.latLng,
-            icon: iconPath,
-            map,
-            title: "Hello World!",
-        });
+            markers.push(marker)
 
-        marker.addListener('click', (e)=>{
-            console.log(e)
-        })
-
-        markers.push(marker)
-
-        setMarkers(markers)
+            setMarkers(markers)
+        }
+        
+        setElevations([])
 
         if(line) {
             line.setMap(null)
         }
 
-        
-        setLine(null)
-        setElevations([])
-
-        let lineSymbol = {
-            path: 'M 0,-2 0,1',
-            strokeOpacity: 1,
-            scale: 4
-          };
-
         let newLine = new window.google.maps.Polyline({
-            path: markers.map(marker => marker.position),
-            strokeOpacity: 0,
-            icons: [{
-                icon: lineSymbol,
-                offset: '0',
-                repeat: '20px'
-            }],
+            path: markers.map(marker => marker),
+            strokeColor: "red",
+            strokeOpacity: 0.4,
+            strokeWeight: 4,
             map: map
         });
 
         setLine(newLine)
 
         if(markers.length > 1) {
-            const lastDistance = window.google.maps.geometry.spherical.computeDistanceBetween(markers[markers.length - 2].position, markers[markers.length - 1].position)
-
-            setDistance(distance + lastDistance)
+            let dist = 0
+            for(let i = 0; i < markers.length - 1; i++) {
+                dist += window.google.maps.geometry.spherical.computeDistanceBetween(markers[i], markers[i + 1])
+            }
+            setDistance(dist)
         }
+    }
+
+    function handleMarkerClick(index) {
+        // remove all markers after and including the one clicked from state.markers
+        markers.length = index
+
+        setMarkers(markers)
+
+        // draw new line using updated markers
+        handleMapClick(false)
     }
 
     function generateElevation() {
@@ -159,11 +151,6 @@ function Map() {
     }
 
     function clearRoute() {
-        if(markers.length) {
-            for (let i = 0; i < markers.length; i++) {
-                markers[i].setMap(null);
-            }
-        }
 
         setMarkers([])
         setPoints([])
@@ -200,16 +187,17 @@ function Map() {
     return isLoaded ? (
         <section className="map h-auto bg-[#cadc72]">
                 <div className='container'>
-                    <div className='row'>
-                        <div className='w-full'>
+                    <div className='row justify-center'>
+                        <div className='w-5/12'>
                             <StandaloneSearchBox ref={search} onLoad={searchLoad} onPlacesChanged={onPlacesChanged} >
                                 <form>
-                                    <label className="absolute left-[-999999px]" for="search">Choose destination</label>
+                                    <label className="absolute left-[-999999px]" htmlFor="search">Choose destination</label>
                                     <input
+                                        id="search"
                                         name='search'
                                         type="text"
                                         placeholder="Choose destination"
-                                        className='p-4 mb-8 w-2/3 border-gray-400 border rounded-md'
+                                        className='p-4 mb-8 w-full border-gray-400 border rounded-md'
                                     />
                                 </form>
                             </StandaloneSearchBox>
@@ -217,7 +205,11 @@ function Map() {
                                 <Button className={`w-1/2 ${!markers.length ? 'bg-gray-300' : ''}` } action={ generateElevation } text="Get elevation"></Button>
                                 <Button className={`w-1/2 ${!markers.length ? 'bg-gray-300' : ''}` } action={ clearRoute } text="Clear route"></Button>
                             </div>
-                            <p className='p-4'>Total distance: <span className='font-bold'>{ (distance / 1000).toFixed(2) + 'km'}</span></p>
+                            <p className='p-4 text-[2rem]'>Total distance: <span className='font-bold'>{ (distance / 1000).toFixed(2) + 'km'}</span></p>
+                        </div>
+                    </div>
+                    <div className='row'>
+                        <div className='w-full'>
                             <GoogleMap
                             className="rounded-lg"
                                 mapContainerStyle={containerStyle}
@@ -228,14 +220,23 @@ function Map() {
                                 onUnmount={onUnmount}
                                 onClick={ (e)=>handleMapClick(e) }
                             >
+                                {markers.map((marker, index) => (
+                                    <Marker
+                                        id={index}
+                                        key={index}
+                                        position={marker}
+                                        icon={index !== 0 ? 'images/marker.png' : 'images/marker_first.png'}
+                                        onClick={(e)=>{ handleMarkerClick(index, e) }}
+
+                                    />
+                                ))}
                             </GoogleMap>
                             
                         </div>
                     </div>
                     <div className='row justify-center'>
                         <div className='w-2/3'>
-                            
-                            <MapChart className={`fixed top-0 left-0 w-full h-screen bg-black bg-opacity-60 flex items-center justify-center transition-opacity duration-500 ${chartActive ? 'opacity-1' : 'opacity-0 translate-x-full' }`} toggle={ toggleChart } points={ elevations } />
+                            <MapChart className={`fixed top-0 left-0 w-full h-screen bg-black bg-opacity-60 flex items-center justify-center transition-opacity duration-500 ${chartActive ? 'opacity-1' : 'opacity-0 pointer-events-none' }`} toggle={ toggleChart } points={ elevations } />
                         </div>
                         
                     </div>
